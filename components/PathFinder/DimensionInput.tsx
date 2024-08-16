@@ -25,7 +25,7 @@ const DimensionInput = ({
   };
 
   return (
-    <div className="flex space-x-4">
+    <div className="flex space-x-4 w-1/5">
       <div>{text}</div>
       <div className="flex flex-col space-y-3">
         <input
