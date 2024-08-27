@@ -1,10 +1,6 @@
 import { DimensionsType } from "@/constants/types";
 
-const ROWS = 30;
-const COLS = 70;
-
-const START: DimensionsType = { x: 0, y: 0 };
-const END: DimensionsType = { x: ROWS - 1, y: COLS - 1 };
+const boxSize = 24;
 
 const isStart = (curr: DimensionsType, start: DimensionsType) =>
   curr.x === start.x && curr.y === start.y;
@@ -28,4 +24,4 @@ const getId = (curr: DimensionsType) => `${curr.x}-${curr.y}`;
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export { isStart, isEnd, neighbours, getId, sleep, START, END, ROWS, COLS };
+export { isStart, isEnd, neighbours, getId, sleep, boxSize };

@@ -27,7 +27,7 @@ const useDFS = (
     count += 1;
     for (const neighbour of n) {
       if (!isVisited.has(getId(neighbour))) {
-        if (setTimeout(() => visualizeDFS(neighbour), 10)) return true;
+        if (setTimeout(() => visualizeDFS(neighbour), 1)) return true;
       }
     }
 
