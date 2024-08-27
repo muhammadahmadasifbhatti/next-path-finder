@@ -7,20 +7,20 @@ const useScreenSize = () => {
   });
 
   useEffect(() => {
-    const handleResize = () => {
-      setScreenSize({
+    const handleResize = (_sh: boolean = false) => {
+      setScreenSize((prev) => ({
         width: window.innerWidth,
-        height: window.innerHeight,
-      });
+        height: _sh ? window.innerHeight : prev.height,
+      }));
     };
 
-    handleResize();
+    handleResize(true);
     if (typeof window !== "undefined")
-      window.addEventListener("resize", handleResize);
+      window.addEventListener("resize", () => handleResize());
 
     return () => {
       if (typeof window !== "undefined")
-        window.removeEventListener("resize", handleResize);
+        window.removeEventListener("resize", () => handleResize());
     };
   }, []);
 

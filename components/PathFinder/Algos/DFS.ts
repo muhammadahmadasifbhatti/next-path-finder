@@ -1,5 +1,7 @@
 import { DimensionsType } from "@/constants/types";
 import { neighbours, getId, isEnd } from "@/components/PathFinder/utils";
+import { displayPath } from "@/components/PathFinder/Algos/utils";
+import { sleep } from "@/components/PathFinder/utils";
 
 const useDFS = (
   start: DimensionsType,
@@ -8,33 +10,33 @@ const useDFS = (
   cols: number
 ) => {
   const isVisited = new Set<string>();
-  let count = 0;
+  const path: DimensionsType[] = [];
 
-  const visualizeDFS = (curr: DimensionsType): boolean => {
-    if (isEnd(curr, end)) return true;
+  const visualizeDFS = async (curr: DimensionsType): Promise<boolean> => {
+    await sleep(1);
+    if (isEnd(curr, end)) {
+      return true;
+    }
 
+    path.push(curr);
     const currId = getId(curr);
     const currElement = document.getElementById(currId);
 
-    if (currElement) {
+    if (currElement && currId !== getId(start))
       currElement.classList.add("bg-red-500");
-      currElement.innerText = count.toString();
-    }
 
     isVisited.add(currId);
     const n = neighbours(curr, rows, cols);
-
-    count += 1;
     for (const neighbour of n) {
       if (!isVisited.has(getId(neighbour))) {
-        if (setTimeout(() => visualizeDFS(neighbour), 1)) return true;
+        if (await visualizeDFS(neighbour)) return true;
       }
     }
-
     return false;
   };
 
-  visualizeDFS(start);
+  isVisited.add(getId(start));
+  visualizeDFS(start).then(() => setTimeout(() => displayPath(path), 1000));
 };
 
 export default useDFS;
