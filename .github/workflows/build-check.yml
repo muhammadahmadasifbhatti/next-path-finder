@@ -23,20 +23,27 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            const pr_number = context.issue.number;
+            let pr_number, sha;
             
-            // Get PR details
-            const pr = await github.rest.pulls.get({
-              owner,
-              repo,
-              pull_number: pr_number
-            });
+            if (context.eventName === 'pull_request') {
+              pr_number = context.payload.pull_request.number;
+              sha = context.payload.pull_request.head.sha;
+            } else {
+              pr_number = context.issue.number;
+              // Get PR details for comment events
+              const pr = await github.rest.pulls.get({
+                owner,
+                repo,
+                pull_number: pr_number
+              });
+              sha = pr.data.head.sha;
+            }
             
             // Set status to pending
             await github.rest.repos.createCommitStatus({
               owner,
               repo,
-              sha: pr.data.head.sha,
+              sha: sha,
               state: 'pending',
               description: 'Build check in progress...',
               context: 'Build Check'
@@ -46,7 +53,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: ${{ github.event.pull_request.head.sha }}
         
       - name: Setup Node.js
         uses: actions/setup-node@v4
