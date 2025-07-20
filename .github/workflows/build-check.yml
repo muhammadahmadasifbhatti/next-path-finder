@@ -67,20 +67,27 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            const pr_number = context.issue.number;
+            let pr_number, sha;
             
-            // Get PR details
-            const pr = await github.rest.pulls.get({
-              owner,
-              repo,
-              pull_number: pr_number
-            });
+            if (context.eventName === 'pull_request') {
+              pr_number = context.payload.pull_request.number;
+              sha = context.payload.pull_request.head.sha;
+            } else {
+              pr_number = context.issue.number;
+              // Get PR details for comment events
+              const pr = await github.rest.pulls.get({
+                owner,
+                repo,
+                pull_number: pr_number
+              });
+              sha = pr.data.head.sha;
+            }
             
             // Set status to success
             await github.rest.repos.createCommitStatus({
               owner,
               repo,
-              sha: pr.data.head.sha,
+              sha: sha,
               state: 'success',
               description: 'Build completed successfully!',
               context: 'Build Check'
@@ -91,7 +98,7 @@ jobs:
               owner,
               repo,
               issue_number: pr_number,
-              body: '✅ **Build Check Passed!** \n\nThe build completed successfully.'
+              body: '✅ **Build Check Passed!** \n\nThe build completed successfully. Hurray!'
             });
         
       - name: Set PR status to failure
@@ -100,20 +107,27 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            const pr_number = context.issue.number;
+            let pr_number, sha;
             
-            // Get PR details
-            const pr = await github.rest.pulls.get({
-              owner,
-              repo,
-              pull_number: pr_number
-            });
+            if (context.eventName === 'pull_request') {
+              pr_number = context.payload.pull_request.number;
+              sha = context.payload.pull_request.head.sha;
+            } else {
+              pr_number = context.issue.number;
+              // Get PR details for comment events
+              const pr = await github.rest.pulls.get({
+                owner,
+                repo,
+                pull_number: pr_number
+              });
+              sha = pr.data.head.sha;
+            }
             
             // Set status to failure
             await github.rest.repos.createCommitStatus({
               owner,
               repo,
-              sha: pr.data.head.sha,
+              sha: sha,
               state: 'failure',
               description: 'Build failed!',
               context: 'Build Check'
