@@ -98,7 +98,7 @@ jobs:
               owner,
               repo,
               issue_number: pr_number,
-              body: '✅ **Build Check Passed!** \n\nThe build completed successfully. Hurray!'
+              body: '✅ **Build Check Passed!** \n\nThe build completed successfully'
             });
         
       - name: Set PR status to failure
