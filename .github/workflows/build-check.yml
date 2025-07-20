@@ -89,15 +89,31 @@ jobs:
               sha = pr.data.head.sha;
             }
             
-            // Set status to success
-            await github.rest.repos.createCommitStatus({
+            // Find the check run we created earlier
+            const checkRuns = await github.rest.checks.listForRef({
               owner,
               repo,
-              sha: sha,
-              state: 'success',
-              description: 'Build completed successfully!',
-              context: 'Build Check'
+              ref: sha,
+              check_name: 'Build Check'
             });
+            
+            const checkRun = checkRuns.data.check_runs.find(run => run.name === 'Build Check');
+            
+            if (checkRun) {
+              // Update existing check run to success
+              await github.rest.checks.update({
+                owner,
+                repo,
+                check_run_id: checkRun.id,
+                status: 'completed',
+                conclusion: 'success',
+                completed_at: new Date().toISOString(),
+                output: {
+                  title: 'Build Check',
+                  summary: 'Build completed successfully!'
+                }
+              });
+            }
             
             // Add success comment
             await github.rest.issues.createComment({
@@ -136,7 +152,7 @@ jobs:
               sha: sha,
               state: 'failure',
               description: 'Build failed!',
-              context: 'Build Check'
+              context: 'Build Check / build'
             });
             
             // Add failure comment
