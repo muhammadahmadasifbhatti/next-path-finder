@@ -1,4 +1,4 @@
-name: Auto Build Check
+name: Auto Comment
 
 on:
   pull_request:
