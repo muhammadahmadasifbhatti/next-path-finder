@@ -6,24 +6,23 @@ on:
     branches: [master, main]
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
-  actions: write 
+  actions: write
 
 jobs:
   auto-comment:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Add build check comment
+      - name: Post comment using PAT
         uses: actions/github-script@v7
         with:
-          github-token: ${{ github.token }}
+          github-token: ${{ secrets.GH_PAT }}
           script: |
             const { owner, repo } = context.repo;
             const pr_number = context.payload.pull_request.number;
-            
-            // Add the build check comment
+
             await github.rest.issues.createComment({
               owner,
               repo,
