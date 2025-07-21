@@ -17,6 +17,7 @@ jobs:
       - name: Add build check comment
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const { owner, repo } = context.repo;
             const pr_number = context.payload.pull_request.number;
