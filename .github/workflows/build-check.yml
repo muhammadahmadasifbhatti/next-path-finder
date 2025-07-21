@@ -98,47 +98,25 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            let pr_number, sha;
+            const pr_number = context.issue.number;
             
-            if (context.eventName === 'pull_request') {
-              pr_number = context.payload.pull_request.number;
-              sha = context.payload.pull_request.head.sha;
-            } else {
-              pr_number = context.issue.number;
-              // Get PR details for comment events
-              const pr = await github.rest.pulls.get({
-                owner,
-                repo,
-                pull_number: pr_number
-              });
-              sha = pr.data.head.sha;
-            }
-            
-            // Find the check run we created earlier
-            const checkRuns = await github.rest.checks.listForRef({
+            // Get PR details for comment events
+            const pr = await github.rest.pulls.get({
               owner,
               repo,
-              ref: sha,
-              check_name: 'Build Check'
+              pull_number: pr_number
             });
+            const sha = pr.data.head.sha;
             
-            const checkRun = checkRuns.data.check_runs.find(run => run.name === 'Build Check');
-            
-            if (checkRun) {
-              // Update existing check run to success
-              await github.rest.checks.update({
-                owner,
-                repo,
-                check_run_id: checkRun.id,
-                status: 'completed',
-                conclusion: 'success',
-                completed_at: new Date().toISOString(),
-                output: {
-                  title: 'Build Check',
-                  summary: 'Build completed successfully!'
-                }
-              });
-            }
+            // Set status to success
+            await github.rest.repos.createCommitStatus({
+              owner,
+              repo,
+              sha: sha,
+              state: 'success',
+              description: 'Build completed successfully!',
+              context: 'Build Check'
+            });
             
             // Add success comment
             await github.rest.issues.createComment({
@@ -154,21 +132,15 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            let pr_number, sha;
+            const pr_number = context.issue.number;
             
-            if (context.eventName === 'pull_request') {
-              pr_number = context.payload.pull_request.number;
-              sha = context.payload.pull_request.head.sha;
-            } else {
-              pr_number = context.issue.number;
-              // Get PR details for comment events
-              const pr = await github.rest.pulls.get({
-                owner,
-                repo,
-                pull_number: pr_number
-              });
-              sha = pr.data.head.sha;
-            }
+            // Get PR details for comment events
+            const pr = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: pr_number
+            });
+            const sha = pr.data.head.sha;
             
             // Set status to failure
             await github.rest.repos.createCommitStatus({
@@ -177,7 +149,7 @@ jobs:
               sha: sha,
               state: 'failure',
               description: 'Build failed!',
-              context: 'Build Check / build'
+              context: 'Build Check'
             });
             
             // Add failure comment
