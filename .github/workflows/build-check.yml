@@ -109,7 +109,7 @@ jobs:
               repo,
               sha: sha,
               state: 'success',
-              description: 'Build completed successfully!!',
+              description: 'Build completed successfully!',
               context: 'Build Check'
             });
             
