@@ -48,5 +48,5 @@ jobs:
         with:
           pr-number: ${{ github.event.issue.number }}
           status: ${{ job.status == 'success' && 'success' || 'failure' }}
-          description: ${{ job.status == 'success' && 'Build completed successfully!' || 'Build failed!' }}
+          description: ${{ job.status == 'success' && 'Build completed successfully' || 'Build failed' }}
           context: ${{ github.workflow }}
