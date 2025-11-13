@@ -1,0 +1,25 @@
+name: 'Checkout PR Code'
+description: 'Checks out the code for a given Pull Request'
+
+inputs:
+  repository:
+    description: 'The repository to checkout (e.g., owner/repo)'
+    required: true
+  ref:
+    description: 'The Git ref to checkout (e.g., pull/123/head)'
+    required: true
+  sha:
+    description: 'The commit SHA to checkout'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout PR code
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ inputs.repository }}
+        ref: ${{ inputs.ref }}
+        fetch-depth: 0 # Fetch all history for all branches and tags
+        path: '.' # Checkout to the current directory
+        token: ${{ github.token }}

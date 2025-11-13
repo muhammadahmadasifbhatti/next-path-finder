@@ -16,10 +16,8 @@ jobs:
     if: github.event.issue.pull_request && contains(github.event.comment.body, '@bci build check')
     
     steps:      
-      - name: Checkout PR code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
+      - name: Get PR details and Checkout Code
+        uses: ./.github/actions/get-and-checkout-pr
 
       - name: Set PR status to pending
         uses: ./.github/actions/report-pr-status
