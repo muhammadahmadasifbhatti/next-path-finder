@@ -13,7 +13,7 @@ permissions:
 jobs:
   auto-comment:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Post comment using PAT
         uses: actions/github-script@v7

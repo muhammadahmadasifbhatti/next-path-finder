@@ -1,8 +1,8 @@
-name: 'Get PR Details and Checkout Code'
-description: 'Fetches PR details and checks out the PR code'
+name: "Get PR Details and Checkout Code"
+description: "Fetches PR details and checks out the PR code"
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Get PR details
       id: pr-details
@@ -11,18 +11,18 @@ runs:
         script: |
           const { owner, repo } = context.repo;
           const pr_number = context.issue.number;
-          
+
           // Get PR details for comment events
           const pr = await github.rest.pulls.get({
             owner,
             repo,
             pull_number: pr_number
           });
-          
+
           core.setOutput('repository', pr.data.head.repo.full_name);
           core.setOutput('ref', pr.data.head.ref);
           core.setOutput('sha', pr.data.head.sha);
-          
+
           return {
             repository: pr.data.head.repo.full_name,
             ref: pr.data.head.ref,

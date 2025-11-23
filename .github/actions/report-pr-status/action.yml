@@ -1,25 +1,25 @@
-name: 'Report PR Status'
-description: 'Reports build status back to PR using GitHub Commit Status API'
+name: "Report PR Status"
+description: "Reports build status back to PR using GitHub Commit Status API"
 inputs:
   pr-number:
-    description: 'Pull request number'
+    description: "Pull request number"
     required: true
   status:
-    description: 'Status to report (pending, success, failure)'
+    description: "Status to report (pending, success, failure)"
     required: true
   description:
-    description: 'Status description'
+    description: "Status description"
     required: true
   context:
-    description: 'Status context name'
+    description: "Status context name"
     required: true
   github-token:
-    description: 'GitHub token'
+    description: "GitHub token"
     required: false
     default: ${{ github.token }}
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Report status to PR
       uses: actions/github-script@v7
@@ -28,7 +28,7 @@ runs:
         script: |
           const { owner, repo } = context.repo;
           const pr_number = ${{ inputs.pr-number }};
-          
+
           // Get PR details for comment events
           const pr = await github.rest.pulls.get({
             owner,
@@ -36,7 +36,7 @@ runs:
             pull_number: pr_number
           });
           const sha = pr.data.head.sha;
-          
+
           // Set commit status
           await github.rest.repos.createCommitStatus({
             owner,
@@ -46,5 +46,5 @@ runs:
             description: '${{ inputs.description }}',
             context: '${{ inputs.context }}'
           });
-          
+
           console.log(`Status '${{ inputs.status }}' reported for PR #${pr_number} (${sha})`);
