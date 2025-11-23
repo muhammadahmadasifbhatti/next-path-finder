@@ -1,15 +1,11 @@
-import { NaigationItemType } from "@/constants/types";
+import { NavigationItemType } from "@/constants/types";
 
-const navigationItems: NaigationItemType[] = [
+const navigationItems: NavigationItemType[] = [
   {
     name: "Home",
     route: "/",
     default: true,
   },
-  // {
-  //   name: "Projects",
-  //   route: "/projects",
-  // },
   {
     name: "Path Finder",
     route: "/pathfinder",

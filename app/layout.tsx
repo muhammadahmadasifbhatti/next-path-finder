@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import React from "react";
-import "./globals.css";
-import Navigation from "@/components/Navigation";
+import "@radix-ui/themes/styles.css";
+import "@/app/globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+import { Box, Theme } from "@radix-ui/themes";
+import type { Metadata } from "next";
+import React from "react";
+
+import Navigation from "@/components/Navigation";
 
 export const metadata: Metadata = {
   title: "Muhammad Ahmad | Intro",
@@ -19,19 +20,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log("layout", inter.className);
-
   return (
     <html lang="en">
       <body>
-        <div>
-          <div className="w-full">
-            <Navigation />
-            <div className="background pt-4 h-full w-full px-10">
-              {children}
-            </div>
-          </div>
-        </div>
+        <Theme appearance="dark" grayColor="sand" accentColor="lime">
+          <Navigation />
+          <Box p="4">{children}</Box>
+        </Theme>
       </body>
     </html>
   );

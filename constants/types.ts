@@ -3,7 +3,7 @@ export type QuestionType = {
   answer: string;
 };
 
-export type NaigationItemType = {
+export type NavigationItemType = {
   name: string;
   route: string;
   default?: boolean;

@@ -1,6 +1,7 @@
 import React from "react";
-import { QuestionType } from "@/constants/types";
+
 import Question from "@/components/Question";
+import { QuestionType } from "@/constants/types";
 
 const Faqs = ({ qas }: { qas: QuestionType[] }) => {
   return (
