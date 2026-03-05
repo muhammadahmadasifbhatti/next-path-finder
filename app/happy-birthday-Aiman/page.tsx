@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { Suspense, useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Box, Button, Flex, Heading, Text } from "@radix-ui/themes";
@@ -8,22 +8,73 @@ import { Box, Button, Flex, Heading, Text } from "@radix-ui/themes";
 const CORRECT_PASSWORD = "07031999";
 
 const images = [
-  { src: "/images/birthday/IMG_6536.jpg", caption: "You make the world brighter ✨" },
-  { src: "/images/birthday/IMG_6538.jpg", caption: "Born to shine 💫" },
-  { src: "/images/birthday/IMG_6550.jpg", caption: "Forever young, forever beautiful 🌸" },
-  { src: "/images/birthday/IMG_6558.jpg", caption: "Making memories 💕" },
-  { src: "/images/birthday/IMG_6864.jpg", caption: "Queen of the day 👑" },
-  { src: "/images/birthday/IMG_6972.jpg", caption: "Smile, it's your birthday! 🎂" },
-  { src: "/images/birthday/IMG_6979.jpg", caption: "Another year of being awesome 🌟" },
-  { src: "/images/birthday/IMG_6980.jpg", caption: "Cheers to you! 🥂" },
-  { src: "/images/birthday/IMG_6981.jpg", caption: "Best day ever! 🎉" },
-  { src: "/images/birthday/IMG_6982.jpg", caption: "Pure happiness 🦋" },
-  { src: "/images/birthday/IMG_6983.jpg", caption: "Living your best life 🌺" },
-  { src: "/images/birthday/IMG_6984.jpg", caption: "Sparkling like always ✨" },
-  { src: "/images/birthday/IMG_6985.jpg", caption: "You're a gift to this world 🎀" },
+  {
+    src: "/images/birthday/IMG_6536.jpg",
+    caption: "You are very good at TT and in fact I lost a game to you ✨",
+  },
+  {
+    src: "/images/birthday/IMG_6538.jpg",
+    caption: "Good day, that's why I have 2 pictures from this day💫",
+  },
+  {
+    src: "/images/birthday/IMG_6550.jpg",
+    caption: "I guess, this is our best picture together 🌸",
+  },
+  {
+    src: "/images/birthday/IMG_6558.jpg",
+    caption:
+      "If there was a competition for cutest smile ever, you would win for sure 💕",
+  },
+  {
+    src: "/images/birthday/IMG_6864.jpg",
+    caption: "I like this sweater 🧥",
+  },
+  {
+    src: "/images/birthday/IMG_6972.jpg",
+    caption: "Look at that smile, I think I make you happy 🎂",
+  },
+  {
+    src: "/images/birthday/IMG_6979.jpg",
+    caption: "You are in your fav bakery, and I am with my fav person 🌟",
+  },
+  { src: "/images/birthday/IMG_6980.jpg", caption: "We look cute together 🥂" },
+  {
+    src: "/images/birthday/IMG_6981.jpg",
+    caption: "Soon to be, Mr. and Mrs. Ahmad 🎉",
+  },
+  {
+    src: "/images/birthday/IMG_6982.jpg",
+    caption: "My heart melts when you tie your hair like this 🦋",
+  },
+  {
+    src: "/images/birthday/IMG_6983.jpg",
+    caption:
+      "I love how you can sit anywhere with me. Be it roadside or in the car. 🌺",
+  },
+  {
+    src: "/images/birthday/IMG_6984.jpg",
+    caption: "Allah nazar se bchaye. Good day, it was. ✨",
+  },
+  {
+    src: "/images/birthday/IMG_6985.jpg",
+    caption: "Ye wali ankhen bohat pasand thin is liye use ki  🎀",
+  },
 ];
 
-const floatingEmojis = ["🎈", "🎂", "🎁", "🎉", "💖", "🌟", "✨", "🦋", "🌸", "💫", "🎀", "🥳"];
+const floatingEmojis = [
+  "🎈",
+  "🎂",
+  "🎁",
+  "🎉",
+  "💖",
+  "🌟",
+  "✨",
+  "🦋",
+  "🌸",
+  "💫",
+  "🎀",
+  "🥳",
+];
 
 function PasswordScreen({ onUnlock }: { onUnlock: () => void }) {
   const [password, setPassword] = useState("");
@@ -109,7 +160,8 @@ function PasswordScreen({ onUnlock }: { onUnlock: () => void }) {
               style={{
                 position: "absolute",
                 inset: "-4px",
-                background: "linear-gradient(to right, #ec4899, #a855f7, #ec4899)",
+                background:
+                  "linear-gradient(to right, #ec4899, #a855f7, #ec4899)",
                 borderRadius: "16px",
                 filter: "blur(12px)",
                 opacity: 0.4,
@@ -157,7 +209,8 @@ function PasswordScreen({ onUnlock }: { onUnlock: () => void }) {
             style={{
               marginTop: "8px",
               padding: "12px 32px",
-              background: "linear-gradient(to right, rgba(236, 72, 153, 0.2), rgba(168, 85, 247, 0.2))",
+              background:
+                "linear-gradient(to right, rgba(236, 72, 153, 0.2), rgba(168, 85, 247, 0.2))",
               border: "1px solid rgba(255, 255, 255, 0.1)",
               borderRadius: "9999px",
               color: "rgba(255, 255, 255, 0.7)",
@@ -226,7 +279,7 @@ function BirthdayContent() {
           emoji={emoji}
           delay={i * 1.5}
           duration={8 + Math.random() * 6}
-          left={5 + (i * 8) % 90}
+          left={5 + ((i * 8) % 90)}
         />
       ))}
 
@@ -302,7 +355,8 @@ function BirthdayContent() {
             size="9"
             weight="bold"
             style={{
-              background: "linear-gradient(to right, #f9a8d4, #c4b5fd, #f9a8d4)",
+              background:
+                "linear-gradient(to right, #f9a8d4, #c4b5fd, #f9a8d4)",
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
@@ -321,7 +375,8 @@ function BirthdayContent() {
               style={{
                 height: "1px",
                 width: "48px",
-                background: "linear-gradient(to right, transparent, rgba(236, 72, 153, 0.5))",
+                background:
+                  "linear-gradient(to right, transparent, rgba(236, 72, 153, 0.5))",
               }}
             />
             <Text size="5" style={{ color: "rgba(249, 168, 212, 0.4)" }}>
@@ -331,7 +386,8 @@ function BirthdayContent() {
               style={{
                 height: "1px",
                 width: "48px",
-                background: "linear-gradient(to left, transparent, rgba(236, 72, 153, 0.5))",
+                background:
+                  "linear-gradient(to left, transparent, rgba(236, 72, 153, 0.5))",
               }}
             />
           </Flex>
@@ -346,8 +402,8 @@ function BirthdayContent() {
               marginTop: "24px",
             }}
           >
-            Wishing you the most magical birthday filled with love, laughter &
-            endless happiness
+            You are the bestest thing ever happened to me. You inpsire me in
+            many ways. You are my best friend, my parru and my sonaa bacha.
           </Text>
         </Flex>
 
@@ -429,7 +485,8 @@ function BirthdayContent() {
                   style={{
                     position: "absolute",
                     inset: 0,
-                    background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent, transparent)",
+                    background:
+                      "linear-gradient(to top, rgba(0,0,0,0.7), transparent, transparent)",
                     zIndex: 10,
                     opacity: 0,
                     transition: "opacity 0.5s",
@@ -479,7 +536,7 @@ function BirthdayContent() {
                 </Flex>
 
                 {/* Always-visible cute caption at the bottom */}
-                <Flex
+                {/* <Flex
                   align="center"
                   px="3"
                   py="1"
@@ -502,7 +559,7 @@ function BirthdayContent() {
                   >
                     {img.caption}
                   </Text>
-                </Flex>
+                </Flex> */}
               </Box>
             </Box>
           ))}
@@ -530,7 +587,7 @@ function BirthdayContent() {
               WebkitTextFillColor: "transparent",
             }}
           >
-            Here&apos;s to Another Amazing Year!
+            May you live many more years!
           </Heading>
           <Text
             size="3"
@@ -543,7 +600,7 @@ function BirthdayContent() {
           >
             May your days be painted in vibrant colors, your heart overflow with
             joy, and every dream you chase become your reality. You deserve all
-            the beautiful things life has to offer.
+            the beautiful things life has to offer. (Ye AI ne likha hai :P)
           </Text>
           <Flex align="center" gap="2" justify="center" mt="6">
             <Text size="5">🎈</Text>
@@ -558,10 +615,12 @@ function BirthdayContent() {
   );
 }
 
-export default function HappyBirthdayAiman() {
+function BirthdayPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [unlocked, setUnlocked] = useState(searchParams.get("unlocked") === "true");
+  const [unlocked, setUnlocked] = useState(
+    searchParams.get("unlocked") === "true"
+  );
 
   const handleUnlock = () => {
     setUnlocked(true);
@@ -573,4 +632,12 @@ export default function HappyBirthdayAiman() {
   }
 
   return <BirthdayContent />;
+}
+
+export default function HappyBirthdayAiman() {
+  return (
+    <Suspense>
+      <BirthdayPage />
+    </Suspense>
+  );
 }
