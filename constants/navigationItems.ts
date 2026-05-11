@@ -10,6 +10,10 @@ const navigationItems: NavigationItemType[] = [
     name: "Path Finder",
     route: "/pathfinder",
   },
+  {
+    name: "Chat",
+    route: "/chat",
+  },
 ];
 
 export default navigationItems;
